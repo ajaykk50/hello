@@ -21,8 +21,8 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-          - name: Run Lint
-            run: echo Run Lint
+      - name: Run Lint
+        run: echo Run Lint
 
 #      - name: Run Lint
 #        run: ./gradlew lintDebug
