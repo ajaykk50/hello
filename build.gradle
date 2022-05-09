@@ -9,3 +9,14 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+sonarqube {
+    properties {
+        property 'sonar.projectName', 'Example of SonarQube Scanner for Gradle Usage'
+    }
+}
+
+// In this section you declare where to find the dependencies of your project
+
+// Define the main class for the application
+
