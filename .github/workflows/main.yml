@@ -5,12 +5,13 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: google-github-actions/setup-gcloud@main
+        uses: actions/checkout@v3
 
       - name: Run Lint
         uses: ./gradlew lintDebug
