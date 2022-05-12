@@ -27,14 +27,39 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build Android Application
-        run: ./gradlew assembleDebug --stacktrace
+      #      - name: Build Android Application
+      #        run: ./gradlew assembleDebug --stacktrace
 
-      - name: Upload Artifact V3
-        uses: actions/upload-artifact@v3
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
         with:
-          name: debug Application
-          path: ./app/build/outputs/apk/debug/app-debug.apk
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          #          body_path: CHANGELOG.md
+
+      - name: build artifacts
+        run: make build-linux && make build-windows && make build-darwin
+      - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/azblogfilter.linux-amd64.tar.gz
+          asset_name: azblogfilter.linux-amd64.tar.gz
+          asset_content_type: application/gzip
+
+
+        #      - name: Upload Artifact V3
+        #        uses: actions/upload-artifact@v3
+        #        with:
+        #          name: debug Application
+        #          path: ./app/build/outputs/apk/debug/app-debug.apk
 
         #      - name: Run Lint
         #        run: echo Run Lint
