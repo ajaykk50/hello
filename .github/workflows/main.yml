@@ -28,7 +28,7 @@ jobs:
           java-version: 11
 
       - name: Build Android Application
-        run: ./gradlew buildDebug
+        run: ./gradlew assembleDebug --stacktrace
 
         #      - name: Run Lint
 #        run: echo Run Lint
